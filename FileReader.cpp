@@ -22,13 +22,17 @@ public:
             string line;
             int i = 0;
             while (getline(newfile, line)) {
-                string nombre = line.substr(0, line.find("|"));
-                double sueldo = stod(line.substr(line.find("|") + 1));
-                employees[i] = Empleado(nombre, sueldo > 5000 ? sueldo * 1.1 : sueldo * 1.15);
-                i++;
-                if (i >= 15) {
-                    break;
+                size_t find = line.find("|");
+                if (!line.empty() && find>=0 && find < 1000) {
+                    string nombre = line.substr(0, find);
+                    double sueldo = stod(line.substr(find + 1));
+                    employees[i] = Empleado(nombre, sueldo, sueldo >= 5000 ? sueldo * 1.1 : sueldo * 1.15);
+                    i++;
+                    if (i >= 15) {
+                        break;
+                    }
                 }
+                
             }
         }
         newfile.close();
